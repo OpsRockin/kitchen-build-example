@@ -1,0 +1,24 @@
+---
+driver:
+  name: vagrant
+  synced_folders:
+    - ["pkg", "/opt/pkg"]
+
+provisioner:
+  name: ansible_playbook
+  hosts: all
+  ansible_verbose: true
+  extra_vars:
+    build_name: jemalloc
+    build_vers: 3.6.0  ## override
+
+platforms:
+  - name: ubuntu-14.04
+  - name: centos-6.5
+
+suites:
+  - name: build
+  - name: test
+    provisioner:
+      playbook: test.yml
+

@@ -1,0 +1,6 @@
+---
+build_vers: 3.6.0
+build_dir: /opt/{{ build_name }}
+source_file: jemalloc-{{ build_vers }}.tar.bz2
+source_url: http://www.canonware.com/download/jemalloc/{{ source_file }}
+pkg_dir: /opt/pkg

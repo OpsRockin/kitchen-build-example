@@ -1,0 +1,12 @@
+---
+- get_url: url={{ source_url }} dest={{build_dir}}/{{ source_file }}
+- command: tar xaf {{ source_file }} chdir={{ build_dir }} creates={{ build_name }}-{{ build_vers }}
+- command: ./configure
+  args:
+    chdir: "{{ build_dir }}/{{ build_name }}-{{ build_vers }}"
+- command: make
+  args:
+    chdir: "{{ build_dir }}/{{ build_name }}-{{ build_vers }}"
+- command: "checkinstall -y --nodoc --pakdir={{ pkg_dir }}"
+  args:
+    chdir: "{{ build_dir }}/{{ build_name }}-{{ build_vers }}"

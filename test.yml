@@ -1,0 +1,17 @@
+---
+- hosts: all
+  sudo: yes
+  tasks:
+    - shell: "ls -1 {{ pkg_dir }}/*.deb | sort -r | head -n 1"
+      register: deb_file
+      when: ansible_distribution == "Ubuntu"
+## Require 1.6
+#   - apt: deb={{ deb_file.stdout }}
+#     when: ansible_distribution == "Ubuntu"
+    - command: dpkg -i {{ deb_file.stdout }}
+      when: ansible_distribution == "Ubuntu"
+    - shell: "ls -1 {{ pkg_dir }}/*.rpm | sort -r | head -n 1"
+      register: rpm_file
+      when: ansible_distribution == "CentOS"
+    - yum: name={{ rpm_file.stdout }}
+      when: ansible_distribution == "CentOS"
